@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// SHARED
+// ============================================================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscription  Subscription?
+  contentJobs   ContentJob[]
+  resumes       Resume[]
+  coverLetters  CoverLetter[]
+  jobMatches    JobMatch[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  plan      String   @default("free")  // free | pro | enterprise
+  status    String   @default("active") // active | cancelled | past_due
+  stripeId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================
+// CONTENT ENGINE
+// ============================================================
+
+model ContentJob {
+  id        String   @id @default(cuid())
+  userId    String
+  input     String
+  output    Json
+  platform  String   // twitter | linkedin | newsletter
+  status    String   @default("pending") // pending | complete | failed
+  createdAt DateTime @default(now())
+
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  history ContentHistory[]
+}
+
+model ContentHistory {
+  id           String   @id @default(cuid())
+  contentJobId String
+  version      Int
+  snapshot     Json
+  createdAt    DateTime @default(now())
+
+  contentJob ContentJob @relation(fields: [contentJobId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================
+// CAREER TOOLKIT
+// ============================================================
+
+model Resume {
+  id        String   @id @default(cuid())
+  userId    String
+  raw       String
+  optimized String?
+  score     Int?
+  createdAt DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobMatches JobMatch[]
+}
+
+model CoverLetter {
+  id        String   @id @default(cuid())
+  userId    String
+  jobTitle  String
+  company   String
+  output    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model JobMatch {
+  id         String   @id @default(cuid())
+  userId     String
+  resumeId   String
+  jobPosting String
+  matchScore Int
+  gaps       Json
+  createdAt  DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
