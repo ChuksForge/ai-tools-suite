@@ -8,16 +8,10 @@ export async function getUserByEmail(email: string) {
   return prisma.user.findUnique({ where: { email } });
 }
 
-export async function createUser(email: string) {
-  return prisma.user.create({
-    data: { email },
-  });
-}
-
-export async function upsertUser(email: string) {
+export async function upsertUser(id: string, email: string) {
   return prisma.user.upsert({
-    where: { email },
-    update: {},
-    create: { email },
+    where: { id },
+    update: { email },
+    create: { id, email },
   });
 }

@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import https from "https";
 
 export function createOpenRouterClient() {
   if (!process.env.OPENROUTER_API_KEY) {
@@ -12,5 +13,11 @@ export function createOpenRouterClient() {
       "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
       "X-Title": "AI Tools Suite",
     },
+    httpAgent: new https.Agent({
+      keepAlive: true,
+      timeout: 55000,
+    }),
+    timeout: 55000,
+    maxRetries: 1,
   });
 }

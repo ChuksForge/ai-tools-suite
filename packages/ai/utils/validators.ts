@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ContentInputSchema = z.object({
   text: z.string().min(50, "Input must be at least 50 characters"),
-  platform: z.enum(["twitter", "linkedin", "newsletter"]),
+  platform: z.enum(["twitter", "linkedin", "newsletter", "tiktok", "instagram", "blog"]),
   tone: z.enum(["professional", "casual", "witty"]).optional().default("professional"),
 });
 

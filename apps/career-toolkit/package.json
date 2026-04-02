@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ai-tools-suite/auth": "workspace:^",
+    "@ai-tools-suite/billing": "workspace:^",
     "@ai-tools-suite/db": "workspace:^",
     "@ai-tools-suite/ui": "workspace:^",
     "@ai-tools-suite/utils": "workspace:^",

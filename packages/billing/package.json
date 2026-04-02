@@ -8,6 +8,10 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint ."
   },
+  "dependencies": {
+    "stripe": "^16.0.0",
+    "@ai-tools-suite/db": "workspace:*"
+  },
   "devDependencies": {
     "typescript": "^5.4.0"
   }
