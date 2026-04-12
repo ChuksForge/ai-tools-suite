@@ -44,6 +44,7 @@ export default function DashboardClient({ user, jobs, usage }: any) {
       currentPath={pathname}
       onSignOut={handleSignOut}
     >
+      <div style={{ maxWidth: "960px", width: "100%" }}>
       {/* Stats row */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "2rem" }}>
         <div className="card">
@@ -145,6 +146,7 @@ export default function DashboardClient({ user, jobs, usage }: any) {
             ))}
           </div>
         )}
+      </div>
       </div>
     </DashboardLayout>
   );

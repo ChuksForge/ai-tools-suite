@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { validateEnv } from "@ai-tools-suite/utils/env";
+validateEnv("career");
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

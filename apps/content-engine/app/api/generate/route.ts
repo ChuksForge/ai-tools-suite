@@ -4,6 +4,16 @@ import { checkUsageLimit } from "@ai-tools-suite/billing";
 import { createContentJob, updateContentJob } from "@ai-tools-suite/db/queries/content/jobs";
 import { upsertUser } from "@ai-tools-suite/db/queries/shared/user";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "../../../lib/rate-limit";
+import { z } from "zod";
+
+const GenerateSchema = z.object({
+  text: z.string().min(50, "Input too short").max(10000, "Input too long"),
+  platform: z.enum(["twitter", "linkedin", "newsletter", "tiktok", "instagram", "blog"]),
+  tone: z.enum(["professional", "casual", "witty"]).default("professional"),
+  stream: z.boolean().default(false),
+});
+
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   const timeout = new Promise<never>((_, reject) =>
     setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
@@ -33,8 +43,24 @@ export async function POST(req: NextRequest) {
       }, { status: 429 });
     }
 
+    const rateCheck = checkRateLimit(`generate:${user.id}`, 20, 60_000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a moment." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
-    const { text, platform, tone, stream } = body;
+    const parsed = GenerateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.errors[0].message },
+        { status: 400 }
+      );
+    }
+    const { text, platform, tone, stream } = parsed.data;
+    
 
     // Create job record
     const job = await createContentJob(user.id, text, platform);

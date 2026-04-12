@@ -13,11 +13,12 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
-    "@prisma/config": "^7.0.0",
     "@prisma/client-runtime-utils": "^7.0.0",
+    "@prisma/config": "^7.0.0",
     "pg": "^8.11.0"
   },
   "devDependencies": {
+    "@types/node": "^20",
     "@types/pg": "^8.11.0",
     "dotenv-cli": "^7.4.0",
     "prisma": "^7.0.0",

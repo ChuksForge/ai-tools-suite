@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@ai-tools-suite/auth/client";
+import { AuthLayout, Button, Input } from "@ai-tools-suite/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -25,36 +26,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-sm space-y-4">
-        <h1 className="text-2xl font-bold">Create your account</h1>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border rounded px-3 py-2"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border rounded px-3 py-2"
-        />
-        <button
-          onClick={handleSignup}
-          disabled={loading}
-          className="w-full bg-black text-white rounded px-3 py-2 disabled:opacity-50"
-        >
-          {loading ? "Creating account..." : "Sign up"}
-        </button>
-        <p className="text-sm text-center">
-          Have an account?{" "}
-          <a href="/login" className="underline">Sign in</a>
-        </p>
+    <AuthLayout appName="Career Toolkit" title="Create your account" subtitle="Start optimizing your career today">
+      <div className="space-y-4">
+        {error && <div className="error-box">{error}</div>}
+        <Input label="Email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input label="Password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Button onClick={handleSignup} loading={loading} className="btn-full mt-2">Sign up</Button>
+        <p className="auth-link-row">Have an account? <a href="/login" className="auth-link">Sign in</a></p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

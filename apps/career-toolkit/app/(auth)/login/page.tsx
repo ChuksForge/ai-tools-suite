@@ -26,44 +26,13 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLayout
-      appName="Career Toolkit"
-      title="Welcome back"
-      subtitle="Sign in to your account to continue"
-    >
+    <AuthLayout appName="Career Toolkit" title="Welcome back" subtitle="Sign in to your account to continue">
       <div className="space-y-4">
-        {error && (
-          <p className="font-mono text-xs text-[#FF3333] border border-[#FF3333] px-3 py-2">
-            {error}
-          </p>
-        )}
-        <Input
-          label="Email"
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          onClick={handleLogin}
-          loading={loading}
-          className="w-full mt-2"
-        >
-          Sign in
-        </Button>
-        <p className="font-mono text-xs text-muted-foreground text-center pt-2">
-          No account?{" "}
-          <a href="/signup" className="text-[#0066FF] hover:underline">
-            Sign up
-          </a>
-        </p>
+        {error && <div className="error-box">{error}</div>}
+        <Input label="Email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input label="Password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Button onClick={handleLogin} loading={loading} className="btn-full mt-2">Sign in</Button>
+        <p className="auth-link-row">No account? <a href="/signup" className="auth-link">Sign up</a></p>
       </div>
     </AuthLayout>
   );

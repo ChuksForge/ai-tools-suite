@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
+    "@types/node": "^20",
     "typescript": "^5.4.0"
   }
 }

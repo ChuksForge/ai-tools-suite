@@ -11,7 +11,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "."
+    "ignoreDeprecations": "5.0"
   },
   "exclude": ["node_modules", "dist", ".next"]
 }
