@@ -431,7 +431,7 @@ Build system:           Turborepo with task caching and parallel execution
 Production-grade AI agents, tools, and applications.
 
 **Website:** [chuksforge.com](https://chuksforge.com)
-**GitHub:** [@ChuksForge](https://github.com/ChuksForge) · **Email:** [helolo@chuksforge.com](mailto:hello@chuksforge.com) **Telegram:** [@ChuksForge](https://t.me/ChuksForge)
+**GitHub:** [@ChuksForge](https://github.com/ChuksForge) · **Email:** [hello@chuksforge.com](mailto:hello@chuksforge.com) **Telegram:** [@ChuksForge](https://t.me/ChuksForge)
 
 ---
 
